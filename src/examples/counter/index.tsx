@@ -9,11 +9,15 @@ const Counter = ({ initialCount = 0 }: CounterProps) => {
   const [count, setCount] = useState(initialCount);
 
   return (
-    <Frame className="text-center">
+    <Frame className="text-center" aria-label="counter">
       <header>
         <h1>Days Since Our Last Gitastrophe™</h1>
       </header>
-      <div className="text-center text-8xl" data-testid="current-count">
+      <div
+        className="text-center text-8xl"
+        aria-label="count"
+        data-testid="current-count"
+      >
         {count}
       </div>
       <div className="flex justify-center gap-4">
