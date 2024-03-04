@@ -1,28 +1,70 @@
-import { render, screen } from 'test/utilities';
-import PackingList from '.';
+import { render, screen, waitFor } from 'test/utilities';
+import { PackingList } from '.';
+import { Provider } from 'react-redux';
+import { createStore } from './store';
+
+const renderPackingList = () => {
+  const store = createStore();
+
+  const { user } = render(
+    <Provider store={store}>
+      <PackingList />
+    </Provider>,
+  );
+
+  const newItemButton = screen.getByRole('button', { name: /add new item/i });
+  const newItemInput = screen.getByLabelText(/new item name/i, {
+    selector: 'input',
+  });
+
+  return {
+    user,
+    newItemInput,
+    newItemButton,
+  };
+};
 
 it('renders the Packing List application', () => {
-  render(<PackingList />);
+  renderPackingList();
 });
 
 it('has the correct title', async () => {
-  render(<PackingList />);
+  renderPackingList();
+
   screen.getByText('Packing List');
 });
 
-it.todo('has an input field for a new item', () => {});
+it('has an input field for a new item', () => {
+  const { newItemInput } = renderPackingList();
 
-it.todo(
-  'has a "Add New Item" button that is disabled when the input is empty',
-  () => {},
-);
+  expect(newItemInput).toBeInTheDocument();
+});
 
-it.todo(
-  'enables the "Add New Item" button when there is text in the input field',
-  async () => {},
-);
+it('has a "Add New Item" button that is disabled when the input is empty', () => {
+  const { newItemInput, newItemButton } = renderPackingList();
 
-it.todo(
-  'adds a new item to the unpacked item list when the clicking "Add New Item"',
-  async () => {},
-);
+  expect(newItemInput).toHaveValue('');
+  expect(newItemButton).toBeDisabled();
+});
+
+it('enables the "Add New Item" button when there is text in the input field', async () => {
+  const { newItemInput, newItemButton, user } = renderPackingList();
+
+  await user.type(newItemInput, 'Mac Book Pro');
+
+  expect(newItemInput).toHaveValue('Mac Book Pro');
+  expect(newItemButton).toBeEnabled();
+});
+
+it('removes an item', async () => {
+  const { newItemInput, newItemButton, user } = renderPackingList();
+
+  await user.type(newItemInput, 'Mac Book Pro');
+  await user.click(newItemButton);
+
+  const removeItem = screen.getByLabelText(/remove/i, { selector: 'button' });
+
+  await user.click(removeItem);
+
+  waitFor(() => expect(removeItem).not.toBeInTheDocument());
+});

@@ -23,6 +23,7 @@ const NewItem = () => {
           id="new-item-name"
           className="w-full"
           type="search"
+          name="new item name"
           placeholder="New Item"
           value={newItemName}
           onChange={(event) => setNewItemName(event.target.value)}
@@ -31,7 +32,8 @@ const NewItem = () => {
           id="new-item-submit"
           className="whitespace-nowrap border-l-0 bg-primary-300"
           disabled={!newItemName}
-          aria-label={'Add New Item'}
+          name="add new item"
+          aria-label="Add New Item"
           type="submit"
         >
           ➕ Add New Item

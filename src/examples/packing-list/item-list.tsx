@@ -15,12 +15,17 @@ const ItemList = ({ title, packed }: ItemsProps) => {
     <section
       id={id}
       className="w-full border-2 border-primary-200 p-4"
+      aria-label={id}
       data-testid={id}
     >
       <header className="mb-4">
         <h2 className="text-lg font-semibold">{title}</h2>
       </header>
-      <ul className="flex flex-col gap-2" data-testid={`${id}-list`}>
+      <ul
+        className="flex flex-col gap-2"
+        aria-label={`${id}-list`}
+        data-testid={`${id}-list`}
+      >
         {itemIds.map((itemId) => (
           <Item key={itemId} itemId={itemId} />
         ))}
