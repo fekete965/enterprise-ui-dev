@@ -19,6 +19,8 @@ jobs:
           cache: npm
       - name: Install Dependencies
         run: npm ci
+      - name: Check Formatting
+        run: npm run format
       - name: Run Unit Test
         run: npm test
 
