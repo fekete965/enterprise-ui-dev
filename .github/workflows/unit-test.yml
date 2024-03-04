@@ -12,14 +12,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Setup Node
+      - name: Setup Node and Cache NPM
         uses: actions/setup-node@v3
-      - name: Cache Resources
-        uses: actions/cache@v3
-        id: npm-cache
         with:
-          path: ~/.npm
-          key: npm-${{ hashfiles('**/package-lock.json') }}
+          node-version: 18
+          cache: npm
       - name: Install Dependencies
         run: npm ci
       - name: Run Unit Test
@@ -30,14 +27,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Setup Node
+      - name: Setup Node and Cache NPM
         uses: actions/setup-node@v3
-      - name: Cache Resources
-        uses: actions/cache@v3
-        id: npm-cache
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('**/package.lock.json') }}
+          node-version: 18
+          cache: npm
       - name: Install Dependencies
         run: npm ci
       - name: Build Application
