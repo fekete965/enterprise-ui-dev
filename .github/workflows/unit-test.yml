@@ -9,12 +9,17 @@ on:
 jobs:
   unit-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
+      - name: Cache Resources
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: npm-${{ hashfiles('**/package-lock.json') }}
       - name: Install Dependencies
         run: npm ci
       - name: Run Unit Test
@@ -22,13 +27,18 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Setup Node
         uses: actions/setup-node@v3
-      - name: Instell Dependencies
+      - name: Cache Resources
+        uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('**/package.lock.json') }}
+      - name: Install Dependencies
         run: npm ci
       - name: Build Application
         run: npm run build
