@@ -22,9 +22,11 @@ export const PackingList = () => {
 };
 
 const PackingListContainer = () => {
-  <Provider store={store}>
-    <PackingList />
-  </Provider>;
+  return (
+    <Provider store={store}>
+      <PackingList />
+    </Provider>
+  );
 };
 
 export default PackingListContainer;

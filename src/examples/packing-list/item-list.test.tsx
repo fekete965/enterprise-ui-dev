@@ -24,6 +24,7 @@ it('should display items', () => {
 
   expect(screen.getByTestId('unpacked-items-list')).toMatchInlineSnapshot(`
     <ul
+      aria-label="unpacked-items-list"
       class="flex flex-col gap-2"
       data-testid="unpacked-items-list"
     >
